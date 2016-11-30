@@ -13,6 +13,7 @@
 		22B727F61DD6FDD7008DA343 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B727F41DD6FDD7008DA343 /* Main.storyboard */; };
 		22B727F81DD6FDD7008DA343 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22B727F71DD6FDD7008DA343 /* Assets.xcassets */; };
 		22B727FB1DD6FDD7008DA343 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B727F91DD6FDD7008DA343 /* LaunchScreen.storyboard */; };
+		22EFAF5A1DEEDB9D00037B82 /* GZVerticalProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EFAF591DEEDB9D00037B82 /* GZVerticalProgressView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		22B727F71DD6FDD7008DA343 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22B727FA1DD6FDD7008DA343 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22B727FC1DD6FDD7008DA343 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22EFAF581DEEDB9D00037B82 /* GZVerticalProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZVerticalProgressView.h; sourceTree = "<group>"; };
+		22EFAF591DEEDB9D00037B82 /* GZVerticalProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZVerticalProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 		22B727EA1DD6FDD7008DA343 /* GZVertialProgressView */ = {
 			isa = PBXGroup;
 			children = (
+				22B728021DD6FE6E008DA343 /* GZVerticalProgressView */,
 				22B727EE1DD6FDD7008DA343 /* AppDelegate.h */,
 				22B727EF1DD6FDD7008DA343 /* AppDelegate.m */,
 				22B727F11DD6FDD7008DA343 /* ViewController.h */,
@@ -77,6 +81,15 @@
 				22B727EC1DD6FDD7008DA343 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22B728021DD6FE6E008DA343 /* GZVerticalProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				22EFAF581DEEDB9D00037B82 /* GZVerticalProgressView.h */,
+				22EFAF591DEEDB9D00037B82 /* GZVerticalProgressView.m */,
+			);
+			path = GZVerticalProgressView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +165,7 @@
 			files = (
 				22B727F31DD6FDD7008DA343 /* ViewController.m in Sources */,
 				22B727F01DD6FDD7008DA343 /* AppDelegate.m in Sources */,
+				22EFAF5A1DEEDB9D00037B82 /* GZVerticalProgressView.m in Sources */,
 				22B727ED1DD6FDD7008DA343 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +323,7 @@
 				22B728011DD6FDD7008DA343 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
