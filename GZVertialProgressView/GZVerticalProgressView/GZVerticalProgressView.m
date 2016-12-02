@@ -33,7 +33,6 @@
 
 @implementation GZVerticalProgressView
 
-
 - (instancetype)initWithFrame:(CGRect)frame values:(NSArray *)values colors:(NSArray *)colors contents:(NSArray *)contents titles:(NSArray *)titles{
     
     if(self = [super initWithFrame:frame]) {
@@ -45,12 +44,13 @@
         _contents = contents;
         _titles = titles;
         
-        lineWidth = 3;
+        lineWidth = 2;
         lineHeight = frame.size.height;
     }
         return self;
 }
 
+#pragma mark - Some calculations
 //calculate percentage for portions
 - (void)calculatePercentages {
     
@@ -61,6 +61,7 @@
     }
     
     _percentages = [NSMutableArray array];
+    
     //calculate the percentage of every portion
     for(int index=0;index<self.values.count;index++) {
         float percent = self.values[index].floatValue/total;
@@ -91,28 +92,27 @@
     [self calculatePercentages];
     [self calculateMidCenterOfLineForPortions];
     
-    
     //draw the progressLine
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetLineCap(ctx, kCGLineCapSquare);
+    CGContextSetLineCap(ctx, kCGLineCapButt);
     CGContextSetLineWidth(ctx, lineWidth);
     
     CGPoint start = CGPointMake(self.bounds.size.width/2.0, self.bounds.size.height);
     CGContextMoveToPoint(ctx, start.x, start.y);
     
     CGFloat y = self.bounds.size.height;
-
+    
     for(int index=0;index<self.percentages.count;index++) {
         
         y -= self.percentages[index].floatValue*lineHeight;
         CGPoint end = CGPointMake(start.x, y);
+        
         CGContextAddLineToPoint(ctx, end.x, end.y);
         CGContextSetStrokeColorWithColor(ctx, self.colors[index].CGColor);
         CGContextDrawPath(ctx, kCGPathStroke);
         CGContextMoveToPoint(ctx, end.x, end.y);
         CGContextSaveGState(ctx);
     }
-    
     
     _midOfHorizontalLines = [NSMutableArray array];
     
@@ -127,15 +127,15 @@
         
         if(index%2==0) {
             
-            CGContextMoveToPoint(ctx, currentMid.x-5, currentMid.y);
-            CGContextAddArc(ctx, currentMid.x-5, currentMid.y, 2, 0, M_PI*2, 0);
+            CGContextMoveToPoint(ctx, currentMid.x-lineWidth/2.0-5, currentMid.y);
+            CGContextAddArc(ctx, currentMid.x-lineWidth/2.0-5, currentMid.y, 2, 0, M_PI*2, 0);
             CGContextDrawPath(ctx, kCGPathFill);
             
             
-            CGFloat cornerX = currentMid.x - kCornerLength*sin(M_PI/3.0);
-            CGFloat cornerY = currentMid.y - kCornerLength*cos(M_PI/3.0);
+            CGFloat cornerX = currentMid.x - lineWidth/2.0 - kCornerLength*sin(M_PI/3.0);
+            CGFloat cornerY = currentMid.y - lineWidth/2.0 - kCornerLength*cos(M_PI/3.0);
             
-            CGContextMoveToPoint(ctx, currentMid.x-5, currentMid.y);
+            CGContextMoveToPoint(ctx, currentMid.x-lineWidth/2.0-5, currentMid.y);
             CGFloat lengths[] = {1,2};
             CGContextSetLineDash(ctx, 0, lengths, 2);
             CGContextAddLineToPoint(ctx, cornerX, cornerY);
@@ -153,14 +153,14 @@
             [self.midOfHorizontalLines addObject:[NSValue valueWithCGPoint:getMiddlePointBetween(corner, end)]];
         }else {
             
-            CGContextMoveToPoint(ctx, currentMid.x+5, currentMid.y);
-            CGContextAddArc(ctx, currentMid.x+5, currentMid.y, 2, 0, M_PI*2, 0);
+            CGContextMoveToPoint(ctx, currentMid.x+lineWidth/2.0+5, currentMid.y);
+            CGContextAddArc(ctx, currentMid.x+lineWidth/2.0+5, currentMid.y, 2, 0, M_PI*2, 0);
             CGContextDrawPath(ctx, kCGPathFill);
             
-            CGFloat cornerX = currentMid.x + kCornerLength*sin(M_PI/3.0);
-            CGFloat cornerY = currentMid.y - kCornerLength*cos(M_PI/3.0);
+            CGFloat cornerX = currentMid.x + lineWidth/2.0 + kCornerLength*sin(M_PI/3.0);
+            CGFloat cornerY = currentMid.y - lineWidth/2.0 - kCornerLength*cos(M_PI/3.0);
             
-            CGContextMoveToPoint(ctx, currentMid.x+5, currentMid.y);
+            CGContextMoveToPoint(ctx, currentMid.x+lineWidth/2.0+5, currentMid.y);
             CGFloat lengths[] = {1,2};
             CGContextSetLineDash(ctx, 0, lengths, 2);
             CGContextAddLineToPoint(ctx, cornerX, cornerY);
@@ -184,11 +184,12 @@
     [self addTextLayers];
 }
 
-
+//add the text layers about the explanation of portions
 - (void)addTextLayers {
     
     for(int index=0;index<self.midOfHorizontalLines.count;index++) {
         
+        //add content text layers
         CATextLayer *contentLayer = [CATextLayer layer];
         contentLayer.bounds = CGRectMake(0, 0, 50, kTextLayerFontSize+2);
         CGPoint center = self.midOfHorizontalLines[index].CGPointValue;
@@ -201,6 +202,7 @@
         contentLayer.string = self.contents[index].stringValue;
         [self.layer addSublayer:contentLayer];
         
+        //add title text layers
         CATextLayer *titleLayer = [CATextLayer layer];
         titleLayer.bounds = CGRectMake(0, 0, 50, kTextLayerFontSize+2);
         titleLayer.position = CGPointMake(center.x, center.y+8);
@@ -211,8 +213,6 @@
         titleLayer.backgroundColor = [UIColor clearColor].CGColor;
         titleLayer.string = self.titles[index];
         [self.layer addSublayer:titleLayer];
-        
-        
     }
 }
 

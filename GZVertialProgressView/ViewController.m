@@ -20,10 +20,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSArray *values = @[[NSNumber numberWithFloat:100],[NSNumber numberWithFloat:100]];
-    NSArray *colors = @[[UIColor cyanColor],[UIColor yellowColor]];
+    NSArray *colors = @[[UIColor yellowColor],[UIColor redColor]];
     NSArray *contents = @[[NSNumber numberWithFloat:4500],[NSNumber numberWithFloat:100]];
     NSArray *titles = @[@"已结本金",@"已还利息"];
-    
     
     GZVerticalProgressView *progressV = [[GZVerticalProgressView alloc]initWithFrame:CGRectMake(0, 0, 200, 100) values:values colors:colors contents:contents titles:titles];
     progressV.center = self.view.center;
